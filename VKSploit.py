@@ -3,6 +3,7 @@ try:
     from vk_api.keyboard import VkKeyboard, VkKeyboardColor
     import vk_api
     import os
+    import random
 except:
     print('Установите, пожалуйста нужные пакеты через pip install <Имя пакета>')
 
