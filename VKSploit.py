@@ -37,8 +37,7 @@ try:
     vk = vk_session.get_api()
     longpoll = VkLongPoll(vk_session)
     print('Подключено!')
-    test_wall()
-    
+    test_wall() 
 except:
     print('Неверный токен или отсутвует подключение к интернету!')
     exit
