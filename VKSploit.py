@@ -12,6 +12,9 @@ print('Пакеты успешно импортированы, запускаю 
 def send(message=None, attachment=None, peer_id=None):
     vk.messages.send(peer_id=id, message=message, attachment=attachment, random_id=random.randint(-2147483648,+2147483648))
 
+def add_chat(chat_id, user_id):
+    vk.messages.addChatUser(chat_id=chat_id, user_id=user_id)
+    
 print('Получить токен можно тут: vkhost.github.io. Токен нужен ОБЯЗАТЕЛЬНО от Kate Mobile!')
 token = input('Введите токен: ')
 
@@ -61,5 +64,11 @@ if(ch == 1):
     else:
         pass
     send(message=message, peer_id=id, attachment=attachment)
+    
+elif(ch == 2):
+    id = input('Введите id пользователя для добавления в беседу: ')
+    cid = input('Введите id беседы куда надо добавить пользователя: ')
+    add_chat(user_id=id, chat_id=cid)
+    
 else:
     print('Введен не действительный метод!')
