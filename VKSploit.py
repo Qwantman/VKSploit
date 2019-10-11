@@ -26,5 +26,7 @@ try:
     vk_session = vk_api.VkApi(token=token1)
     vk = vk_session.get_api()
     longpoll = VkLongPoll(vk_session)
+    print('Подключено!')
 except:
-    print('Успешное подключение!')
+    print('Неверный токен или отсутвует подключение к интернету!')
+    exit
