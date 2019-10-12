@@ -122,7 +122,7 @@ elif(ch == 6):
         message = None
     else:
         pass
-    give_warn(id=id, type=type, comment=comment)
+    give_warn(id=id, type=type, comment=message)
     print('Успешно!')
         
 elif(ch == 7):
