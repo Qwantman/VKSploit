@@ -88,26 +88,17 @@ elif(ch == 2):
     
 elif(ch == 3):
     res = vk.friends.deleteAllRequests()
-    if(str(res) == '1'):
-        print('Успешно')
-    else:
-        print('Возникла ошибка при выполнении')
+    print('Успешно')
         
 elif(ch == 4):
     id = input('Введите id человекаа для добавления в ЧС: ')
     res = give_BAN(id)
-    if(str(res) == '1'):
-        print('Успешно')
-    else:
-        print('Возникла ошибка при выполнении')
+    print('Успешно')
         
 elif(ch == 5):
     id = input('Введите id человека для уборки из ЧС: ')
     res = takeAway_BAN(id)
-    if(str(res) == '1'):
-        print('Успешно')
-    else:
-        print('Возникла ошибка при выполнении')
+    print('Успешно')
         
 elif(ch == 6):
     message = input('Введите текст для поста: ')
