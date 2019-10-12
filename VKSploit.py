@@ -4,6 +4,7 @@ try:
     import vk_api
     import os
     import random
+    import json
 except:
     print('Установите, пожалуйста нужные пакеты через pip install <Имя пакета>')
 
@@ -26,6 +27,9 @@ def takeAway_BAN(id):
     
 def give_warn(id, type, comment=None):
     vk.users.report(user_id=id, type=type, comment=comment)
+    
+def change_pass(old, new):
+    vk.account.changePassword(old_password=old, new_password=new)
     
 print('Получить токен можно тут: vkhost.github.io. Токен нужен ОБЯЗАТЕЛЬНО от Kate Mobile!')
 token = input('Введите токен: ')
@@ -50,32 +54,39 @@ except:
     print('Неверный токен или отсутвует подключение к интернету!')
     exit
 
-choise = int(input('''
+choise = input('''
 
 ВНИМАНИЕ! ПРОГРАММА СОЗДАНА В ОБРАЗОВАТЕЛЬНЫХ ЦЕЛЯХ И ЕЙ НЕ ПОСТАВЛЕНА ЗАДАЧА КОМУ-ЛИБО НАВРЕДИТЬ! ДАННУЮ ПРОГРАММУ ВЫ ИСПОЛЬЗУЕТЕ, ПОНИМАЯ, ЧТО СОЗДАТЕЛЬ НЕ НЕСЁТ НИКАКОЙ ОТВЕТСТВЕННОСТИ ЗА ВАШИ ДЕЙСТВИЯ. ВСЕ ДЕЛАЕТСЯ НА ВАШ СТРАХ И РИСК!
 
 Выберите, что требуется сделать:
 
+Профиль:
+1. Сменить пароль
+
 Сообщения и беседы:
-1. Отправить сообщение
-2. Добавить человека в беседу
+2. Отправить сообщение
+3. Добавить человека в беседу
 
 Друзья и ЧС:
-3. Отменить все заявки в друзья
-4. Добавить человека в ЧС
-5. Убрать человека из ЧС
-6. Пожаловаться на пользователя
+4. Отменить все заявки в друзья
+5. Добавить человека в ЧС
+6. Убрать человека из ЧС
+7. Пожаловаться на пользователя
 
 Стена:
-7. Опубликовать запись
+8. Опубликовать запись
 
+99. Инфо о программе
+00. Выход
 
+Ваш выбор: ''')
 
-Ваш выбор: '''))
-
-ch = choise
+ch = int(choise)
 
 if(ch == 1):
+    
+
+elif(ch == 2):
     id = input('Введите id получателя/чата: ')
     message = input('Введите сообщение для отправки: ')
     attachment = input('Если требуется введите id вложения в формате photo<id>_<id>: ')
@@ -85,26 +96,26 @@ if(ch == 1):
         pass
     send(message=message, peer_id=id, attachment=attachment)
     
-elif(ch == 2):
+elif(ch == 3):
     id = input('Введите id пользователя для добавления в беседу: ')
     cid = input('Введите id беседы куда надо добавить пользователя: ')
     add_chat(user_id=id, chat_id=cid)
     
-elif(ch == 3):
+elif(ch == 4):
     res = vk.friends.deleteAllRequests()
     print('Успешно')
         
-elif(ch == 4):
+elif(ch == 5):
     id = input('Введите id человека для добавления в ЧС: ')
     res = give_BAN(id)
     print('Успешно')
         
-elif(ch == 5):
+elif(ch == 6):
     id = input('Введите id человека для уборки из ЧС: ')
     res = takeAway_BAN(id)
     print('Успешно')
     
-elif(ch == 6):
+elif(ch == 7):
     id = input('Введите id человека для подачи жалобы: ')
     type = input('''
     Выберите тип жалобы:
@@ -125,7 +136,7 @@ elif(ch == 6):
     give_warn(id=id, type=type, comment=message)
     print('Успешно!')
         
-elif(ch == 7):
+elif(ch == 8):
     message = input('Введите текст для поста: ')
     attachment = input('Если требуется введите id вложения в формате photo<id>_<id>: ')
     if(len(attachment) == 0):
@@ -133,6 +144,21 @@ elif(ch == 7):
     else:
         pass
     wall_post(message=message, attachment=attachment)
+    
+elif(str(ch) == "00"):
+    exit
+
+elif(str(ch) == '99'):
+    with open("info.json", "r") as f:
+        json = json.loads(f)
+        vers = json['version']
+        name = json['sozd']
+        op = json['desc']
+        
+    print('''
+    Версия программы: ''' +vers +'''
+    Создатель: ''' +name +'''
+    Описание: ''' +op)
     
 else:
     print('Введен не действительный метод!')
