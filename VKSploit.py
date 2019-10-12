@@ -24,6 +24,9 @@ def give_BAN(id):
 def takeAway_BAN(id):
     vk.account.unban(owner_id=id)
     
+def give_warn(id, type, comment=None):
+    vk.users.report(user_id=id, type=type, comment=comment)
+    
 print('Получить токен можно тут: vkhost.github.io. Токен нужен ОБЯЗАТЕЛЬНО от Kate Mobile!')
 token = input('Введите токен: ')
 
@@ -61,9 +64,10 @@ choise = int(input('''
 3. Отменить все заявки в друзья
 4. Добавить человека в ЧС
 5. Убрать человека из ЧС
+6. Пожаловаться на пользователя
 
 Стена:
-6. Опубликовать запись
+7. Опубликовать запись
 
 
 
@@ -91,7 +95,7 @@ elif(ch == 3):
     print('Успешно')
         
 elif(ch == 4):
-    id = input('Введите id человекаа для добавления в ЧС: ')
+    id = input('Введите id человека для добавления в ЧС: ')
     res = give_BAN(id)
     print('Успешно')
         
@@ -99,8 +103,29 @@ elif(ch == 5):
     id = input('Введите id человека для уборки из ЧС: ')
     res = takeAway_BAN(id)
     print('Успешно')
-        
+    
 elif(ch == 6):
+    id = input('Введите id человека для подачи жалобы: ')
+    type = input('''
+    Выберите тип жалобы:
+    
+    porn — порнография;
+    spam — рассылка спама;
+    insult — оскорбительное поведение;
+    advertisеment — рекламная страница, засоряющая поиск.
+    
+    Введите тип так же как и сверху:
+    ''')
+    type = type.lower()
+    message = input('Если требуется введите сообщение для поддержки: ')
+    if(len(message) == 0):
+        message = None
+    else:
+        pass
+    give_warn(id=id, type=type, comment=comment)
+    print('Успешно!')
+        
+elif(ch == 7):
     message = input('Введите текст для поста: ')
     attachment = input('Если требуется введите id вложения в формате photo<id>_<id>: ')
     if(len(attachment) == 0):
