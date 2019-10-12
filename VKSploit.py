@@ -18,6 +18,9 @@ def add_chat(chat_id, user_id):
 def wall_post(message, attachment=None):
     vk.wall.post(message=message, attachment=attachment)
     
+def give_BAN(id):
+    vk.account.ban(owner_id=id)
+    
 print('Получить токен можно тут: vkhost.github.io. Токен нужен ОБЯЗАТЕЛЬНО от Kate Mobile!')
 token = input('Введите токен: ')
 
@@ -87,7 +90,12 @@ elif(ch == 3):
         print('Возникла ошибка при выполнении')
         
 elif(ch == 4):
-    
+    id = input('Введите id человекаа для добавления в ЧС: ')
+    res = str(give_BAN(id))
+    if(str(res) == '1'):
+        print('Успешно')
+    else:
+        print('Возникла ошибка при выполнении')
         
 elif(ch == 5):
     message = input('Введите текст для поста: ')
