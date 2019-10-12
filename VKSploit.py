@@ -84,7 +84,10 @@ choise = input('''
 ch = int(choise)
 
 if(ch == 1):
-    
+    old = input('Введите старый пароль: ') 
+    new = input('Введите новый пароль: ') 
+    change_pass(old=old, new=new)
+    print('Успешно!') 
 
 elif(ch == 2):
     id = input('Введите id получателя/чата: ')
