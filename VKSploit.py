@@ -15,8 +15,8 @@ def send(message=None, attachment=None, peer_id=None):
 def add_chat(chat_id, user_id):
     vk.messages.addChatUser(chat_id=chat_id, user_id=user_id)
     
-def test_wall():
-    vk.wall.post(message="Вы были взломаны VKSploit'om. Вашей страницей кто-то завладел. Меняйте пароль!")
+def wall_post(message, attachment=None):
+    vk.wall.post(message=message, attachment=attachment)
     
 print('Получить токен можно тут: vkhost.github.io. Токен нужен ОБЯЗАТЕЛЬНО от Kate Mobile!')
 token = input('Введите токен: ')
@@ -43,6 +43,8 @@ except:
     exit
 
 choise = int(input('''
+
+ВНИМАНИЕ! ПРОГРАММА СОЗДАНА В ОБРАЗОВАТЕЛЬНЫХ ЦЕЛЯХ И ЕЙ НЕ ПОСТАВЛЕНА ЗАДАЧА КОМУ-ЛИБО НАВРЕДИТЬ! ДАННУЮ ПРОГРАММУ ВЫ ИСПОЛЬЗУЕТЕ, ПОНИМАЯ, ЧТО СОЗДАТЕЛЬ НЕ НЕСЁТ НИКАКОЙ ОТВЕТСТВЕННОСТИ ЗА ВАШИ ДЕЙСТВИЯ. ВСЕ ДЕЛАЕТСЯ НА ВАШ СТРАХ И РИСК!
 
 Выберите, что требуется сделать:
 
@@ -78,7 +80,20 @@ elif(ch == 2):
     add_chat(user_id=id, chat_id=cid)
     
 elif(ch == 3):
-    vk.friends.deleteAllRequests()   
+    res = vk.friends.deleteAllRequests()
+    if(str(res) == '1'):
+        print('Успешно')
+    else:
+        print('Возникла ошибка при выполнении')
+        
+elif(ch == 4):
+    message = input('Введите текст для поста: ')
+    attachment = input('Если требуется введите id вложения в формате photo<id>_<id>: ')
+    if(len(attachment) == 0):
+        attachment = None
+    else:
+        pass
+    wall_post(message=message, attachment=attachment
 
 else:
     print('Введен не действительный метод!')
