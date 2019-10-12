@@ -93,6 +93,7 @@ elif(ch == 4):
         attachment = None
     else:
         pass
-    wall_post(message=message, attachment=attachment
+    wall_post(message=message, attachment=attachment)
+    
 else:
     print('Введен не действительный метод!')
