@@ -21,6 +21,9 @@ def wall_post(message, attachment=None):
 def give_BAN(id):
     vk.account.ban(owner_id=id)
     
+def takeAway_BAN(id):
+    vk.account.unban(owner_id=id)
+    
 print('Получить токен можно тут: vkhost.github.io. Токен нужен ОБЯЗАТЕЛЬНО от Kate Mobile!')
 token = input('Введите токен: ')
 
@@ -57,9 +60,10 @@ choise = int(input('''
 Друзья и ЧС:
 3. Отменить все заявки в друзья
 4. Добавить человека в ЧС
+5. Убрать человека из ЧС
 
 Стена:
-5. Опубликовать запись
+6. Опубликовать запись
 
 
 
@@ -91,13 +95,21 @@ elif(ch == 3):
         
 elif(ch == 4):
     id = input('Введите id человекаа для добавления в ЧС: ')
-    res = str(give_BAN(id))
+    res = give_BAN(id)
     if(str(res) == '1'):
         print('Успешно')
     else:
         print('Возникла ошибка при выполнении')
         
 elif(ch == 5):
+    id = input('Введите id человека для уборки из ЧС: ')
+    res = takeAway_BAN(id)
+    if(str(res) == '1'):
+        print('Успешно')
+    else:
+        print('Возникла ошибка при выполнении')
+        
+elif(ch == 6):
     message = input('Введите текст для поста: ')
     attachment = input('Если требуется введите id вложения в формате photo<id>_<id>: ')
     if(len(attachment) == 0):
