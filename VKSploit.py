@@ -152,16 +152,11 @@ elif(str(ch) == "00"):
     exit
 
 elif(str(ch) == '99'):
-    with open("info.json", "r") as f:
-        json = json.loads(f)
-        vers = json['version']
-        name = json['sozd']
-        op = json['desc']
-        
     print('''
-    Версия программы: ''' +vers +'''
-    Создатель: ''' +name +'''
-    Описание: ''' +op)
+    Версия программы: 1.3
+    Создатель: Qwantman
+    Описание: Программа для управления ВК при помощи токена
+    ''')
     
 else:
     print('Введен не действительный метод!')
