@@ -4,6 +4,7 @@ try:
     import os
     import random
     import json
+    import time
 except:
     print('Установите, пожалуйста нужные пакеты через pip install <Имя пакета>')
 
@@ -52,26 +53,27 @@ try:
     vk = vk_session.get_api()
     longpoll = VkLongPoll(vk_session)
     print('Подключено!')
+    print('ВНИМАНИЕ! ПРОГРАММА СОЗДАНА В ОБРАЗОВАТЕЛЬНЫХ ЦЕЛЯХ И ЕЙ НЕ ПОСТАВЛЕНА ЗАДАЧА КОМУ-ЛИБО НАВРЕДИТЬ! ДАННУЮ ПРОГРАММУ ВЫ ИСПОЛЬЗУЕТЕ, ПОНИМАЯ, ЧТО СОЗДАТЕЛЬ НЕ НЕСЁТ НИКАКОЙ ОТВЕТСТВЕННОСТИ ЗА ВАШИ ДЕЙСТВИЯ. ВСЕ ДЕЛАЕТСЯ НА ВАШ СТРАХ И РИСК!')
 except:
     print('Неверный токен или отсутвует подключение к интернету!')
     exit()
 
 while(1 == 1):
+    time.sleep(5)
     choise = input('''
-    
-    ВНИМАНИЕ! ПРОГРАММА СОЗДАНА В ОБРАЗОВАТЕЛЬНЫХ ЦЕЛЯХ И ЕЙ НЕ ПОСТАВЛЕНА ЗАДАЧА КОМУ-ЛИБО НАВРЕДИТЬ! ДАННУЮ ПРОГРАММУ ВЫ ИСПОЛЬЗУЕТЕ, ПОНИМАЯ, ЧТО СОЗДАТЕЛЬ НЕ НЕСЁТ НИКАКОЙ ОТВЕТСТВЕННОСТИ ЗА ВАШИ ДЕЙСТВИЯ. ВСЕ ДЕЛАЕТСЯ НА ВАШ СТРАХ И РИСК!
-    
+
     Выберите, что требуется сделать:
     
     Профиль:                                    Сообщения и беседы:
     1. Сменить пароль                           2. Отправить сообщение
                                                 3. Добавить человека в беседу
+                                                4. Просмотреть приходящие сообщения
 
     Друзья и ЧС:                                Стена:
-    4. Отменить все заявки в друзья             8. Опубликовать запись
-    5. Добавить человека в ЧС
-    6. Убрать человека из ЧС
-    7. Пожаловаться на пользователя
+    5. Отменить все заявки в друзья             9. Опубликовать запись
+    6. Добавить человека в ЧС
+    7. Убрать человека из ЧС
+    8. Пожаловаться на пользователя
     
     
                                                 99. Инфо о программе
@@ -103,20 +105,40 @@ while(1 == 1):
         add_chat(user_id=id, chat_id=cid)
 
     elif(ch == 4):
+        print('Запускаю...')
+        time.sleep(3)
+        print('Запущено, начинаю логгирование :)')
+        while(1 == 1):
+            for event in longpoll.listen():
+                if (event.type == VkEventType.MESSAGE_NEW):
+                    f = open('log.txt', 'w')
+                    text = event.text
+                    if(event.from_chat):
+                        cid = event.chat_id
+                        text = 'Чат с id: ' +str(cid) +' написал ' + str(text)
+                        f.write(text)
+                        print(text)
+                    elif(event.from_user):
+                        id = event.user_id
+                        text = 'Человек с id: ' +str(id) +' написал ' + str(text)
+                        f.write(text)
+                        print(text)
+
+    elif(ch == 5):
         res = vk.friends.deleteAllRequests()
         print('Успешно')
 
-    elif(ch == 5):
+    elif(ch == 6):
         id = input('Введите id человека для добавления в ЧС: ')
         res = give_BAN(id)
         print('Успешно')
 
-    elif(ch == 6):
+    elif(ch == 7):
         id = input('Введите id человека для уборки из ЧС: ')
         res = takeAway_BAN(id)
         print('Успешно')
 
-    elif(ch == 7):
+    elif(ch == 8):
         id = input('Введите id человека для подачи жалобы: ')
         type = input('''
         Выберите тип жалобы:
@@ -137,7 +159,7 @@ while(1 == 1):
         give_warn(id=id, type=type, comment=message)
         print('Успешно!')
 
-    elif(ch == 8):
+    elif(ch == 9):
         message = input('Введите текст для поста: ')
         attachment = input('Если требуется введите id вложения в формате photo<id>_<id>: ')
         if(len(attachment) == 0):
@@ -146,15 +168,16 @@ while(1 == 1):
             pass
         wall_post(message=message, attachment=attachment)
 
-    elif(str(ch) == "00"):
+    elif(ch == 00):
         exit()
 
-    elif(str(ch) == '99'):
+    elif(ch == 99):
         print('''
         Версия программы: 1.3
         Создатель: Qwantman
         Описание: Программа для управления ВК при помощи токена
         ''')
+        exit()
 
     else:
         print('Введен не действительный метод!')
