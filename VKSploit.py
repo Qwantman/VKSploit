@@ -56,109 +56,105 @@ except:
     print('Неверный токен или отсутвует подключение к интернету!')
     exit()
 
-choise = input('''
-
-ВНИМАНИЕ! ПРОГРАММА СОЗДАНА В ОБРАЗОВАТЕЛЬНЫХ ЦЕЛЯХ И ЕЙ НЕ ПОСТАВЛЕНА ЗАДАЧА КОМУ-ЛИБО НАВРЕДИТЬ! ДАННУЮ ПРОГРАММУ ВЫ ИСПОЛЬЗУЕТЕ, ПОНИМАЯ, ЧТО СОЗДАТЕЛЬ НЕ НЕСЁТ НИКАКОЙ ОТВЕТСТВЕННОСТИ ЗА ВАШИ ДЕЙСТВИЯ. ВСЕ ДЕЛАЕТСЯ НА ВАШ СТРАХ И РИСК!
-
-Выберите, что требуется сделать:
-
-Профиль:
-1. Сменить пароль
-
-Сообщения и беседы:
-2. Отправить сообщение
-3. Добавить человека в беседу
-
-Друзья и ЧС:
-4. Отменить все заявки в друзья
-5. Добавить человека в ЧС
-6. Убрать человека из ЧС
-7. Пожаловаться на пользователя
-
-Стена:
-8. Опубликовать запись
-
-99. Инфо о программе
-00. Выход
-
-Ваш выбор: ''')
-
-ch = int(choise)
-
-if(ch == 1):
-    old = input('Введите старый пароль: ') 
-    new = input('Введите новый пароль: ') 
-    change_pass(old=old, new=new)
-    print('Успешно!') 
-
-elif(ch == 2):
-    id = input('Введите id получателя/чата: ')
-    message = input('Введите сообщение для отправки: ')
-    attachment = input('Если требуется введите id вложения в формате photo<id>_<id>: ')
-    if(len(attachment) == 0):
-        attachment = None
-    else:
-        pass
-    send(message=message, peer_id=id, attachment=attachment)
+while(1 == 1):
+    choise = input('''
     
-elif(ch == 3):
-    id = input('Введите id пользователя для добавления в беседу: ')
-    cid = input('Введите id беседы куда надо добавить пользователя: ')
-    add_chat(user_id=id, chat_id=cid)
+    ВНИМАНИЕ! ПРОГРАММА СОЗДАНА В ОБРАЗОВАТЕЛЬНЫХ ЦЕЛЯХ И ЕЙ НЕ ПОСТАВЛЕНА ЗАДАЧА КОМУ-ЛИБО НАВРЕДИТЬ! ДАННУЮ ПРОГРАММУ ВЫ ИСПОЛЬЗУЕТЕ, ПОНИМАЯ, ЧТО СОЗДАТЕЛЬ НЕ НЕСЁТ НИКАКОЙ ОТВЕТСТВЕННОСТИ ЗА ВАШИ ДЕЙСТВИЯ. ВСЕ ДЕЛАЕТСЯ НА ВАШ СТРАХ И РИСК!
     
-elif(ch == 4):
-    res = vk.friends.deleteAllRequests()
-    print('Успешно')
+    Выберите, что требуется сделать:
+    
+    Профиль:                                    Сообщения и беседы:
+    1. Сменить пароль                           2. Отправить сообщение
+                                                3. Добавить человека в беседу
+
+    Друзья и ЧС:                                Стена:
+    4. Отменить все заявки в друзья             8. Опубликовать запись
+    5. Добавить человека в ЧС
+    6. Убрать человека из ЧС
+    7. Пожаловаться на пользователя
+    
+    
+                                                99. Инфо о программе
+                                                00. Выход
+    
+    Ваш выбор: ''')
+
+    ch = int(choise)
+
+    if(ch == 1):
+        old = input('Введите старый пароль: ')
+        new = input('Введите новый пароль: ')
+        change_pass(old=old, new=new)
+        print('Успешно!')
+
+    elif(ch == 2):
+        id = input('Введите id получателя/чата: ')
+        message = input('Введите сообщение для отправки: ')
+        attachment = input('Если требуется введите id вложения в формате photo<id>_<id>: ')
+        if(len(attachment) == 0):
+            attachment = None
+        else:
+            pass
+        send(message=message, peer_id=id, attachment=attachment)
+
+    elif(ch == 3):
+        id = input('Введите id пользователя для добавления в беседу: ')
+        cid = input('Введите id беседы куда надо добавить пользователя: ')
+        add_chat(user_id=id, chat_id=cid)
+
+    elif(ch == 4):
+        res = vk.friends.deleteAllRequests()
+        print('Успешно')
+
+    elif(ch == 5):
+        id = input('Введите id человека для добавления в ЧС: ')
+        res = give_BAN(id)
+        print('Успешно')
+
+    elif(ch == 6):
+        id = input('Введите id человека для уборки из ЧС: ')
+        res = takeAway_BAN(id)
+        print('Успешно')
+
+    elif(ch == 7):
+        id = input('Введите id человека для подачи жалобы: ')
+        type = input('''
+        Выберите тип жалобы:
         
-elif(ch == 5):
-    id = input('Введите id человека для добавления в ЧС: ')
-    res = give_BAN(id)
-    print('Успешно')
+        porn — порнография;
+        spam — рассылка спама;
+        insult — оскорбительное поведение;
+        advertisеment — рекламная страница, засоряющая поиск.
         
-elif(ch == 6):
-    id = input('Введите id человека для уборки из ЧС: ')
-    res = takeAway_BAN(id)
-    print('Успешно')
-    
-elif(ch == 7):
-    id = input('Введите id человека для подачи жалобы: ')
-    type = input('''
-    Выберите тип жалобы:
-    
-    porn — порнография;
-    spam — рассылка спама;
-    insult — оскорбительное поведение;
-    advertisеment — рекламная страница, засоряющая поиск.
-    
-    Введите тип так же как и сверху:
-    ''')
-    type = type.lower()
-    message = input('Если требуется введите сообщение для поддержки: ')
-    if(len(message) == 0):
-        message = None
-    else:
-        pass
-    give_warn(id=id, type=type, comment=message)
-    print('Успешно!')
-        
-elif(ch == 8):
-    message = input('Введите текст для поста: ')
-    attachment = input('Если требуется введите id вложения в формате photo<id>_<id>: ')
-    if(len(attachment) == 0):
-        attachment = None
-    else:
-        pass
-    wall_post(message=message, attachment=attachment)
-    
-elif(str(ch) == "00"):
-    exit
+        Введите тип так же как и сверху:
+        ''')
+        type = type.lower()
+        message = input('Если требуется введите сообщение для поддержки: ')
+        if(len(message) == 0):
+            message = None
+        else:
+            pass
+        give_warn(id=id, type=type, comment=message)
+        print('Успешно!')
 
-elif(str(ch) == '99'):
-    print('''
-    Версия программы: 1.3
-    Создатель: Qwantman
-    Описание: Программа для управления ВК при помощи токена
-    ''')
-    
-else:
-    print('Введен не действительный метод!')
+    elif(ch == 8):
+        message = input('Введите текст для поста: ')
+        attachment = input('Если требуется введите id вложения в формате photo<id>_<id>: ')
+        if(len(attachment) == 0):
+            attachment = None
+        else:
+            pass
+        wall_post(message=message, attachment=attachment)
+
+    elif(str(ch) == "00"):
+        exit()
+
+    elif(str(ch) == '99'):
+        print('''
+        Версия программы: 1.3
+        Создатель: Qwantman
+        Описание: Программа для управления ВК при помощи токена
+        ''')
+
+    else:
+        print('Введен не действительный метод!')
