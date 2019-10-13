@@ -1,6 +1,5 @@
 try:
     from vk_api.longpoll import VkLongPoll, VkEventType
-    from vk_api.keyboard import VkKeyboard, VkKeyboardColor
     import vk_api
     import os
     import random
@@ -9,6 +8,9 @@ except:
     print('Установите, пожалуйста нужные пакеты через pip install <Имя пакета>')
 
 print('Пакеты успешно импортированы, запускаю программу!')
+
+def close_programm():
+    exit
 
 def send(message=None, attachment=None, peer_id=None):
     vk.messages.send(peer_id=id, message=message, attachment=attachment, random_id=random.randint(-2147483648,+2147483648))
@@ -52,7 +54,7 @@ try:
     print('Подключено!')
 except:
     print('Неверный токен или отсутвует подключение к интернету!')
-    exit
+    exit()
 
 choise = input('''
 
