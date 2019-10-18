@@ -7,11 +7,12 @@ try:
     import time
 except:
     print('Установите, пожалуйста нужные пакеты через pip install <Имя пакета>')
+    exit() 
 
 print('Пакеты успешно импортированы, запускаю программу!')
 
 def close_programm():
-    exit
+    exit() 
 
 def send(message=None, attachment=None, peer_id=None):
     vk.messages.send(peer_id=id, message=message, attachment=attachment, random_id=random.randint(-2147483648,+2147483648))
@@ -121,6 +122,11 @@ while(1 == 1):
                     elif(event.from_user):
                         id = event.user_id
                         text = 'Человек с id: ' +str(id) +' написал ' + str(text)
+                        f.write(text)
+                        print(text)
+                    elif(event.from_me):
+                        id = event.user_id
+                        text = 'Я ответил: ' + str(text)
                         f.write(text)
                         print(text)
 
