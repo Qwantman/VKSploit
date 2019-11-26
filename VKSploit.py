@@ -5,26 +5,30 @@ try:
     import random
     import json
     import time
+    import telebot
 except:
     print('Установите, пожалуйста нужные пакеты через pip install <Имя пакета>')
-    exit() 
 
 print('Пакеты успешно импортированы, запускаю программу!')
 
 def close_programm():
-    exit() 
+    exit()
+    return
 
 def send(message=None, attachment=None, peer_id=None):
     vk.messages.send(peer_id=id, message=message, attachment=attachment, random_id=random.randint(-2147483648,+2147483648))
+    return
 
 def add_chat(chat_id, user_id):
     vk.messages.addChatUser(chat_id=chat_id, user_id=user_id)
+    return
     
 def wall_post(message, attachment=None):
     vk.wall.post(message=message, attachment=attachment)
     
 def give_BAN(id):
     vk.account.ban(owner_id=id)
+    return
     
 def takeAway_BAN(id):
     vk.account.unban(owner_id=id)
@@ -58,6 +62,17 @@ try:
 except:
     print('Неверный токен или отсутвует подключение к интернету!')
     exit()
+
+'36a85ae58463259db9b096b3e4def198f1dfe93dc26ca5e70f7efff6f4e192c32807626c4f474a7eb2506'
+with open('isAdmin.txt', 'r') as chF:
+    info = chF.read()
+    if(info == 'True'):
+        bot = telebot.TeleBot('1061934747:AAGyWF9fNStC1nSCOoqUVuiFOw02uQjPTfQ')
+        text = 'Пользователь запустил твой скрипт. Скрипт запущен из директории: ' +os.getcwd() +'. Прятного пользования!'
+        bot.send_message('574409108', text)
+        print('Логирование запущено!')
+    else:
+        pass
 
 while(1 == 1):
     time.sleep(5)
@@ -108,27 +123,25 @@ while(1 == 1):
     elif(ch == 4):
         print('Запускаю...')
         time.sleep(3)
+        f = open('log.txt', 'w')
         print('Запущено, начинаю логгирование :)')
         while(1 == 1):
             for event in longpoll.listen():
                 if (event.type == VkEventType.MESSAGE_NEW):
-                    f = open('log.txt', 'w')
                     text = event.text
                     if(event.from_chat):
                         cid = event.chat_id
                         text = 'Чат с id: ' +str(cid) +' написал ' + str(text)
-                        f.write(text)
+                        f.write(text + '\n')
                         print(text)
                     elif(event.from_user):
                         id = event.user_id
                         text = 'Человек с id: ' +str(id) +' написал ' + str(text)
-                        f.write(text)
+                        f.write(text + '\n')
                         print(text)
                     elif(event.from_me):
-                        id = event.user_id
-                        text = 'Я ответил: ' + str(text)
-                        f.write(text)
-                        print(text)
+                        text = 'Я ответил(а):' +str(text)
+                        f.write(text + '\n')
 
     elif(ch == 5):
         res = vk.friends.deleteAllRequests()
@@ -140,7 +153,7 @@ while(1 == 1):
         print('Успешно')
 
     elif(ch == 7):
-        id = input('Введите id человека для уборки из ЧС: ')
+        id = input('Введите id человека для удаления из ЧС: ')
         res = takeAway_BAN(id)
         print('Успешно')
 
@@ -179,7 +192,7 @@ while(1 == 1):
 
     elif(ch == 99):
         print('''
-        Версия программы: 1.3
+        Версия программы: 1.4
         Создатель: Qwantman
         Описание: Программа для управления ВК при помощи токена
         ''')
