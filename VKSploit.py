@@ -6,38 +6,45 @@ try:
     import json
     import time
     import telebot
+    print('Пакеты успешно импортированы, запускаю программу!')
 except:
     print('Установите, пожалуйста нужные пакеты через pip install <Имя пакета>')
 
-print('Пакеты успешно импортированы, запускаю программу!')
-
 def close_programm():
     exit()
-    return
+    return 0
 
 def send(message=None, attachment=None, peer_id=None):
     vk.messages.send(peer_id=id, message=message, attachment=attachment, random_id=random.randint(-2147483648,+2147483648))
-    return
+    return 0
 
 def add_chat(chat_id, user_id):
     vk.messages.addChatUser(chat_id=chat_id, user_id=user_id)
-    return
+    return 0
     
 def wall_post(message, attachment=None):
     vk.wall.post(message=message, attachment=attachment)
-    
+    return 0
+
 def give_BAN(id):
     vk.account.ban(owner_id=id)
-    return
+    return 0
     
 def takeAway_BAN(id):
     vk.account.unban(owner_id=id)
-    
+    return 0
+
 def give_warn(id, type, comment=None):
     vk.users.report(user_id=id, type=type, comment=comment)
-    
+    return 0
+
 def change_pass(old, new):
     vk.account.changePassword(old_password=old, new_password=new)
+    return 0
+
+def add_f(text, user_id):
+    vk.friends.add(user_id=user_id, text=text)
+    return 0
     
 print('Получить токен можно тут: vkhost.github.io. Токен нужен ОБЯЗАТЕЛЬНО от Kate Mobile!')
 token = input('Введите токен: ')
@@ -53,17 +60,16 @@ while(1 == 1):
 print('Токен распознан. Пытаемся подключиться к серверам ВК...')
 
 try:
-    token1 = token
-    vk_session = vk_api.VkApi(token=token1)
-    vk = vk_session.get_api()
-    longpoll = VkLongPoll(vk_session)
-    print('Подключено!')
-    print('ВНИМАНИЕ! ПРОГРАММА СОЗДАНА В ОБРАЗОВАТЕЛЬНЫХ ЦЕЛЯХ И ЕЙ НЕ ПОСТАВЛЕНА ЗАДАЧА КОМУ-ЛИБО НАВРЕДИТЬ! ДАННУЮ ПРОГРАММУ ВЫ ИСПОЛЬЗУЕТЕ, ПОНИМАЯ, ЧТО СОЗДАТЕЛЬ НЕ НЕСЁТ НИКАКОЙ ОТВЕТСТВЕННОСТИ ЗА ВАШИ ДЕЙСТВИЯ. ВСЕ ДЕЛАЕТСЯ НА ВАШ СТРАХ И РИСК!')
+	token1 = token
+	vk_session = vk_api.VkApi(token=token1)
+	vk = vk_session.get_api()
+	longpoll = VkLongPoll(vk_session)
+	print('Подключено!')
+	print('ВНИМАНИЕ! ПРОГРАММА СОЗДАНА В ОБРАЗОВАТЕЛЬНЫХ ЦЕЛЯХ И ЕЙ НЕ ПОСТАВЛЕНА ЗАДАЧА КОМУ-ЛИБО НАВРЕДИТЬ! ДАННУЮ ПРОГРАММУ ВЫ ИСПОЛЬЗУЕТЕ, ПОНИМАЯ, ЧТО СОЗДАТЕЛЬ НЕ НЕСЁТ НИКАКОЙ ОТВЕТСТВЕННОСТИ ЗА ВАШИ ДЕЙСТВИЯ. ВСЕ ДЕЛАЕТСЯ НА ВАШ СТРАХ И РИСК!')
 except:
     print('Неверный токен или отсутвует подключение к интернету!')
     exit()
 
-'36a85ae58463259db9b096b3e4def198f1dfe93dc26ca5e70f7efff6f4e192c32807626c4f474a7eb2506'
 with open('isAdmin.txt', 'r') as chF:
     info = chF.read()
     if(info == 'True'):
@@ -86,10 +92,11 @@ while(1 == 1):
                                                 4. Просмотреть приходящие сообщения
 
     Друзья и ЧС:                                Стена:
-    5. Отменить все заявки в друзья             9. Опубликовать запись
+    5. Отменить все заявки в друзья             10. Опубликовать запись
     6. Добавить человека в ЧС
     7. Убрать человека из ЧС
     8. Пожаловаться на пользователя
+    9. Добавить человека в друзья
     
     
                                                 99. Инфо о программе
@@ -102,8 +109,8 @@ while(1 == 1):
     if(ch == 1):
         old = input('Введите старый пароль: ')
         new = input('Введите новый пароль: ')
-        change_pass(old=old, new=new)
-        print('Успешно!')
+        token = change_pass(old=old, new=new)
+        print('Успешно. Новый токен: ' + token)
 
     elif(ch == 2):
         id = input('Введите id получателя/чата: ')
@@ -179,6 +186,17 @@ while(1 == 1):
         print('Успешно!')
 
     elif(ch == 9):
+        try:
+            user_id = input('Введите id человека: ')
+            text = input('Введите сопроводительное сообщение: ')
+            if(text == ''):
+                text == None
+            else:
+                pass
+        except:   
+            add_f(text=text, user_id=user_id)
+
+    elif(ch == 10):
         message = input('Введите текст для поста: ')
         attachment = input('Если требуется введите id вложения в формате photo<id>_<id>: ')
         if(len(attachment) == 0):
