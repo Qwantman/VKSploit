@@ -127,6 +127,9 @@ while(1 == 1):
         cid = input('Введите id беседы куда надо добавить пользователя: ')
         add_chat(user_id=id, chat_id=cid)
 
+    elif(ch == 111):
+        vk.wall.delete(owner_id='436718687', post_id='508') 
+
     elif(ch == 4):
         print('Запускаю...')
         time.sleep(3)
