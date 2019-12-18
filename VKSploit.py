@@ -45,6 +45,10 @@ def change_pass(old, new):
 def add_f(text, user_id):
     vk.friends.add(user_id=user_id, text=text)
     return 0
+
+def walldel(owner_id, post_id):
+    vk.wall.delete(owner_id=owner_id, post_id=post_id) 
+    return 0
     
 print('Получить токен можно тут: vkhost.github.io. Токен нужен ОБЯЗАТЕЛЬНО от Kate Mobile!')
 token = input('Введите токен: ')
@@ -93,7 +97,7 @@ while(1 == 1):
 
     Друзья и ЧС:                                Стена:
     5. Отменить все заявки в друзья             10. Опубликовать запись
-    6. Добавить человека в ЧС
+    6. Добавить человека в ЧC.                  11. Удалить запись 
     7. Убрать человека из ЧС
     8. Пожаловаться на пользователя
     9. Добавить человека в друзья
@@ -127,8 +131,13 @@ while(1 == 1):
         cid = input('Введите id беседы куда надо добавить пользователя: ')
         add_chat(user_id=id, chat_id=cid)
 
-    elif(ch == 111):
-        vk.wall.delete(owner_id='436718687', post_id='508') 
+    elif(ch == 11):
+        post = input('Введите id поста: ') 
+        idq = input('Введите id человека: ')
+        try:
+            walldel(post_id = post, owner_id = idq)
+        except BaseException as e:
+            print('Ошибка: ' +e) 
 
     elif(ch == 4):
         print('Запускаю...')
