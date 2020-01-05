@@ -256,5 +256,5 @@ def main():
         else:
             print('Введен не действительный метод!')
 
-if __init__ == '__main__':
+if __name__ == '__main__':
     main() 
