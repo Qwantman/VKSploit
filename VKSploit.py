@@ -5,10 +5,18 @@ try:
     import random
     import json
     import time
+    import telebot
     print('Пакеты успешно импортированы, запускаю программу!')
 except:
     print('Установите, пожалуйста нужные пакеты через pip install <Имя пакета>')
-    exit()
+    yes = int(input('Если Вы хотите установить пакеты нажмите 1, если нет - 2: '))
+    if yes == 1:
+        os.system('pip install vk_api')
+        os.system('pip install pytelegrambotapi')
+        print('Пакеты установлены! Запускаю программу!')
+    else:
+        exit()
+    
 
 def close_programm():
     exit()
