@@ -1,82 +1,58 @@
-try:
-    from vk_api.longpoll import VkLongPoll, VkEventType
-    import vk_api
-    import os
-    import random
-    import json
-    import time
-    import telebot
-    print('Пакеты успешно импортированы, запускаю программу!')
-except:
-    print('Установите, пожалуйста нужные пакеты через pip install <Имя пакета>')
+#try:
+from vk_api.longpoll import VkLongPoll, VkEventType
+import vk_api
+import os
+import random
+import json
+import time
+print('Пакеты успешно импортированы, запускаю программу!')
+#except:
+ #   print('Установите, пожалуйста нужные пакеты через pip install <Имя пакета>')
+  #  exit()
+
+def close_programm():
     exit()
-    
-class connect():
-    
-    def __init__():
-        from vk_api.longpoll import VkLongPoll, VkEventType
-        import vk_api
-   
-    def connect_longpoll(token):
-        vk_session = vk_api.VkApi(token=token)
-        vk = vk_session.get_api()
-        longpoll = VkLongPoll(vk_session)
-        return longpoll
+    return 0
 
-    def get_api(token):
-        vk_session = vk_api.VkApi(token=token)
-        vk = vk_session.get_api()
-        return vk
+def send(message=None, attachment=None, user_id=None):
+    vk.messages.send(user_id=id, message=message, attachment=attachment, random_id=random.randint(-2147483648,+2147483648))
+    return 0
 
-class VKS():
-    
-    def __init__():
-        from vk_api.longpoll import VkLongPoll, VkEventType
-        import vk_api
-
-    def close_programm():
-        exit()
-        return 0
-
-    def send(message=None, attachment=None, peer_id=None):
-        vk.messages.send(peer_id=id, message=message, attachment=attachment, random_id=random.randint(-2147483648,+2147483648))
-        return 0
-
-    def add_chat(chat_id, user_id):
-        vk.messages.addChatUser(chat_id=chat_id, user_id=user_id)
-        return 0
+def add_chat(chat_id, user_id):
+    vk.messages.addChatUser(chat_id=chat_id, user_id=user_id)
+    return 0
         
-    def wall_post(message, attachment=None):
-        vk.wall.post(message=message, attachment=attachment)
-        return 0
+def wall_post(message, attachment=None):
+    vk.wall.post(message=message, attachment=attachment)
+    return 0
 
-    def give_BAN(id):
-        vk.account.ban(owner_id=id)
-        return 0
+def give_BAN(id):
+    vk.account.ban(owner_id=id)
+    return 0
     
-    def takeAway_BAN(id):
-        vk.account.unban(owner_id=id)
-        return 0
+def takeAway_BAN(id):
+    vk.account.unban(owner_id=id)
+    return 0
 
-    def give_warn(id, type, comment=None):
-        vk.users.report(user_id=id, type=type, comment=comment)
-        return 0
+def give_warn(id, type, comment=None):
+    vk.users.report(user_id=id, type=type, comment=comment)
+    return 0
 
-    def change_pass(old, new):
-        vk.account.changePassword(old_password=old, new_password=new)
-        return 0
+def change_pass(old, new):
+    vk.account.changePassword(old_password=old, new_password=new)
+    return 0
 
-    def add_f(text, user_id):
-        vk.friends.add(user_id=user_id, text=text)
-        return 0
+def add_f(text, user_id):
+    vk.friends.add(user_id=user_id, text=text)
+    return 0
 
-    def walldel(owner_id, post_id):
-        vk.wall.delete(owner_id=owner_id, post_id=post_id) 
-        return 0
+def walldel(owner_id, post_id):
+    vk.wall.delete(owner_id=owner_id, post_id=post_id) 
+    return 0
         
         
    
-def main():  
+if __name__ == '__main__':  
     print('Получить токен можно тут: vkhost.github.io. Токен нужен ОБЯЗАТЕЛЬНО от Kate Mobile!')
     token = input('Введите токен: ')
 
@@ -89,28 +65,16 @@ def main():
             break
 
     try:
-        vk = connect.get_api(token) 
-        longpoll = connect.connect_longpoll(token) 
+        vk_session = vk_api.VkApi(token=token)
+        longpoll = VkLongPoll(vk_session)
+        vk = vk_session.get_api()
+        print('Токен распознан. Пытаемся подключиться к серверам ВК...')
     except:
         print('Ошибка!') 
-        exit() 
-    print('Токен распознан. Пытаемся подключиться к серверам ВК...')
-
-    try:
-        with open('isAdmin.txt', 'r') as chF:
-            info = chF.read()
-            if(info == 'True'):
-                bot = telebot.TeleBot('1061934747:AAGyWF9fNStC1nSCOoqUVuiFOw02uQjPTfQ')
-                text = 'Пользователь запустил твой скрипт. Скрипт запущен из директории: ' +os.getcwd() +'. Прятного пользования!'
-                bot.send_message('574409108', text)
-                print('Логирование запущено!')
-            else:
-                pass
-    except:
-        pass
+        exit()
 
     while(1 == 1):
-        time.sleep(5)
+        time.sleep(1)
         choise = input('''
 
     Выберите, что требуется сделать:
@@ -138,29 +102,29 @@ def main():
         if(ch == 1):
             old = input('Введите старый пароль: ')
             new = input('Введите новый пароль: ')
-            token = VKS.change_pass(old=old, new=new)
+            token = change_pass(old=old, new=new)
             print('Успешно. Новый токен: ' + token)
 
         elif(ch == 2):
-            id = input('Введите id получателя/чата: ')
+            id = input('Введите id получателя: ')
             message = input('Введите сообщение для отправки: ')
             attachment = input('Если требуется введите id вложения в формате photo<id>_<id>: ')
             if(len(attachment) == 0):
                 attachment = None
             else:
                 pass
-            VKS.send(message=message, peer_id=id, attachment=attachment)
+            send(message=message, user_id=id, attachment=attachment)
 
         elif(ch == 3):
             id = input('Введите id пользователя для добавления в беседу: ')
             cid = input('Введите id беседы куда надо добавить пользователя: ')
-            VKS.add_chat(user_id=id, chat_id=cid)
+            add_chat(user_id=id, chat_id=cid)
 
         elif(ch == 11):
             post = input('Введите id поста: ') 
             idq = input('Введите id человека: ')
             try:
-                VKS.walldel(post_id = post, owner_id = idq)
+                walldel(post_id = post, owner_id = idq)
             except BaseException as e:
                 print('Ошибка: ' +e) 
 
@@ -188,17 +152,17 @@ def main():
                             f.write(text + '\n')
 
         elif(ch == 5):
-            res = VKS.vk.friends.deleteAllRequests()
+            res = vk.friends.deleteAllRequests()
             print('Успешно')
 
         elif(ch == 6):
             id = input('Введите id человека для добавления в ЧС: ')
-            res = VKS.give_BAN(id)
+            res = give_BAN(id)
             print('Успешно')
 
         elif(ch == 7):
             id = input('Введите id человека для удаления из ЧС: ')
-            res = VKS.takeAway_BAN(id)
+            res = takeAway_BAN(id)
             print('Успешно')
 
         elif(ch == 8):
@@ -219,7 +183,7 @@ def main():
                 message = None
             else:
                 pass
-            VKS.give_warn(id=id, type=type, comment=message)
+            give_warn(id=id, type=type, comment=message)
             print('Успешно!')
 
         elif(ch == 9):
@@ -231,7 +195,7 @@ def main():
                 else:
                     pass
             except:   
-                VKS.add_f(text=text, user_id=user_id)
+                add_f(text=text, user_id=user_id)
 
         elif(ch == 10):
             message = input('Введите текст для поста: ')
@@ -240,7 +204,7 @@ def main():
                 attachment = None
             else:
                 pass
-            VKS.wall_post(message=message, attachment=attachment)
+            wall_post(message=message, attachment=attachment)
 
         elif(ch == 00):
             exit()
@@ -255,6 +219,3 @@ def main():
 
         else:
             print('Введен не действительный метод!')
-
-if __name__ == '__main__':
-    main() 
