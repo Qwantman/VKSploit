@@ -1,14 +1,14 @@
-#try:
-from vk_api.longpoll import VkLongPoll, VkEventType
-import vk_api
-import os
-import random
-import json
-import time
-print('Пакеты успешно импортированы, запускаю программу!')
-#except:
- #   print('Установите, пожалуйста нужные пакеты через pip install <Имя пакета>')
-  #  exit()
+try:
+    from vk_api.longpoll import VkLongPoll, VkEventType
+    import vk_api
+    import os
+    import random
+    import json
+    import time
+    print('Пакеты успешно импортированы, запускаю программу!')
+except:
+    print('Установите, пожалуйста нужные пакеты через pip install <Имя пакета>')
+    exit()
 
 def close_programm():
     exit()
@@ -210,11 +210,16 @@ if __name__ == '__main__':
             exit()
 
         elif(ch == 99):
+            with open('info.json', 'r') as file:
+                info = file.read()
+                info = json.loads(info)
+            version = info[0]['version']
+            sozd = info[0]['sozd']
+            desc = info[0]['desc']
             print('''
-        Версия программы: 1.4
-        Создатель: Qwantman
-        Описание: Программа для управления ВК при помощи токена
-            ''')
+        Версия программы: ''' + str(version) + '''
+        Создатель: ''' + str(sozd) + '''
+        Описание: ''' + desc)
             exit()
 
         else:
