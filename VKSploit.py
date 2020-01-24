@@ -4,7 +4,6 @@ try:
     import os
     import random
     import json
-    import time
     print('Пакеты успешно импортированы, запускаю программу!')
 except:
     print('Установите, пожалуйста нужные пакеты через pip install <Имя пакета>')
@@ -14,7 +13,10 @@ except:
         print('Пакеты установлены! Запускаю программу!')
     else:
         exit()
-    
+
+def close_messages_from_group(gid):
+    vk.messages.denyMessagesFromGroup(group_id=gid)
+    return 0
 
 def close_programm():
     exit()
@@ -89,13 +91,14 @@ if __name__ == '__main__':
     1. Сменить пароль                           2. Отправить сообщение
                                                 3. Добавить человека в беседу
                                                 4. Просмотреть приходящие сообщения
-
+                                                5. Запретить сообществу присылать сообщения
+                                                
     Друзья и ЧС:                                Стена:
-    5. Отменить все заявки в друзья             10. Опубликовать запись
-    6. Добавить человека в ЧC.                  11. Удалить запись 
-    7. Убрать человека из ЧС
-    8. Пожаловаться на пользователя
-    9. Добавить человека в друзья
+    6. Отменить все заявки в друзья             11. Опубликовать запись
+    7. Добавить человека в ЧC.                  12. Удалить запись 
+    8. Убрать человека из ЧС
+    9. Пожаловаться на пользователя
+    10. Добавить человека в друзья
     
     
                                                 99. Инфо о программе
@@ -126,7 +129,7 @@ if __name__ == '__main__':
             cid = input('Введите id беседы куда надо добавить пользователя: ')
             add_chat(user_id=id, chat_id=cid)
 
-        elif(ch == 11):
+        elif(ch == 12):
             post = input('Введите id поста: ') 
             idq = input('Введите id человека: ')
             try:
@@ -143,12 +146,12 @@ if __name__ == '__main__':
                 for event in longpoll.listen():
                     if (event.type == VkEventType.MESSAGE_NEW):
                         text = event.text
-                        if(event.from_chat):
+                        if(event.from_chat and not event.from_me):
                             cid = event.chat_id
                             text = 'Чат с id: ' +str(cid) +' написал ' + str(text)
                             f.write(text + '\n')
                             print(text)
-                        elif(event.from_user):
+                        elif(event.from_user and not event.from_me):
                             id = event.user_id
                             text = 'Человек с id: ' +str(id) +' написал ' + str(text)
                             f.write(text + '\n')
@@ -158,20 +161,25 @@ if __name__ == '__main__':
                             f.write(text + '\n')
 
         elif(ch == 5):
-            res = vk.friends.deleteAllRequests()
+            gid = input('Введите id сообщества: ')
+            close_messages_from_group(gid)
             print('Успешно')
 
         elif(ch == 6):
+            res = vk.friends.deleteAllRequests()
+            print('Успешно')
+
+        elif(ch == 7):
             id = input('Введите id человека для добавления в ЧС: ')
             res = give_BAN(id)
             print('Успешно')
 
-        elif(ch == 7):
+        elif(ch == 8):
             id = input('Введите id человека для удаления из ЧС: ')
             res = takeAway_BAN(id)
             print('Успешно')
 
-        elif(ch == 8):
+        elif(ch == 9):
             id = input('Введите id человека для подачи жалобы: ')
             type = input('''
         Выберите тип жалобы:
@@ -192,7 +200,7 @@ if __name__ == '__main__':
             give_warn(id=id, type=type, comment=message)
             print('Успешно!')
 
-        elif(ch == 9):
+        elif(ch == 10):
             try:
                 user_id = input('Введите id человека: ')
                 text = input('Введите сопроводительное сообщение: ')
@@ -203,7 +211,7 @@ if __name__ == '__main__':
             except:   
                 add_f(text=text, user_id=user_id)
 
-        elif(ch == 10):
+        elif(ch == 11):
             message = input('Введите текст для поста: ')
             attachment = input('Если требуется введите id вложения в формате photo<id>_<id>: ')
             if(len(attachment) == 0):
