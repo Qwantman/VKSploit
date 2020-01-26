@@ -4,6 +4,7 @@ try:
     import os
     import random
     import json
+    import time
     print('Пакеты успешно импортированы, запускаю программу!')
 except:
     print('Установите, пожалуйста нужные пакеты через pip install <Имя пакета>')
