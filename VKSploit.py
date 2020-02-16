@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*- 
+#-*-coding:utf-8;-*-
+#coding: utf8
 try:
     from vk_api.longpoll import VkLongPoll, VkEventType
     import vk_api
